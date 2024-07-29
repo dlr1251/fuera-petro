@@ -48,7 +48,7 @@ const Countdown = () => {
 
   return (
     <div className="countdown-container">
-      <h1 className="countdown-title">al gobierno Petro le faltan...</h1>
+      <h1 className="countdown-title">Al gobierno Petro le faltan...</h1>
       <div className="countdown-timer">
         {timerComponents.length ? timerComponents : <span>¡Se acabó el tiempo!</span>}
       </div>
