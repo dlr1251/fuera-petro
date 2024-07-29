@@ -24,7 +24,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1.5rem; /* Adjusted font size for better layout */
   font-weight: bold;
 }
 
@@ -47,16 +47,106 @@
   animation: none;
 }
 
+.additional-formats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.time-format-segment {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.yellow-background {
+  background: linear-gradient(135deg, #f2c94c, #f2994a);
+  color: #333;
+}
+
+.aqua-background {
+  background: linear-gradient(135deg, #56ccf2, #2f80ed);
+  color: #fff;
+}
+
+.red-background {
+  background: linear-gradient(135deg, #f29999, #eb5757);
+  color: #fff;
+}
+
+.text-background {
+  background: linear-gradient(135deg, #9b51e0, #bb6bd9);
+  color: #fff;
+}
+
+.time-value {
+  font-size: 2rem; /* Adjusted font size for better layout */
+  font-weight: bold;
+}
+
+.time-text {
+  font-size: 1.5rem;
+  font-weight: normal;
+  text-align: center;
+}
+
+.format-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.format-button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.format-button:hover {
+  transform: scale(1.05);
+}
+
+.copy-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #1e90ff, #00bfff);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.copy-button:hover {
+  transform: scale(1.05);
+}
+
 @media (min-width: 640px) {
   .countdown-title {
     font-size: 3rem;
   }
   .countdown-timer {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Adjusted font size for better layout */
   }
   .time-segment {
     padding: 0.7rem 1.5rem;
     width: 120px; /* Set a larger fixed width for larger screens */
+  }
+  .time-value {
+    font-size: 2.5rem; /* Adjusted font size for better layout */
+  }
+  .time-text {
+    font-size: 2rem;
   }
 }
 
@@ -65,11 +155,17 @@
     font-size: 4rem;
   }
   .countdown-timer {
-    font-size: 3rem;
+    font-size: 2.5rem; /* Adjusted font size for better layout */
   }
   .time-segment {
     padding: 1rem 2rem;
     width: 140px; /* Adjust width as needed */
+  }
+  .time-value {
+    font-size: 3rem; /* Adjusted font size for better layout */
+  }
+  .time-text {
+    font-size: 2.5rem;
   }
 }
 
@@ -78,10 +174,16 @@
     font-size: 5rem;
   }
   .countdown-timer {
-    font-size: 3.5rem;
+    font-size: 3rem; /* Adjusted font size for better layout */
   }
   .time-segment {
     padding: 1.2rem 2.5rem;
     width: 160px; /* Adjust width as needed */
+  }
+  .time-value {
+    font-size: 3.5rem; /* Adjusted font size for better layout */
+  }
+  .time-text {
+    font-size: 3rem;
   }
 }
