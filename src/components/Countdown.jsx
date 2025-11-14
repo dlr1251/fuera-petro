@@ -291,15 +291,9 @@ const Countdown = () => {
         Al gobierno Petro le faltan...
       </h1>
 
-      <div className="countdown-display-wrapper">
-        <div className="format-transition-container" key={selectedFormat}>
-          {renderFormat()}
-        </div>
-      </div>
-
-      {/* Simple Format Bar */}
-      <div className="format-bar">
-        <div className="format-bar-container">
+      {/* Compact Format Bar - Moved right after title */}
+      <div className="format-bar-compact">
+        <div className="format-bar-container-compact">
           {/* Main Category Selector */}
           <div className="category-selector">
             <button
@@ -348,6 +342,13 @@ const Countdown = () => {
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Countdown Display */}
+      <div className="countdown-display-wrapper">
+        <div className="format-transition-container" key={selectedFormat}>
+          {renderFormat()}
         </div>
       </div>
 

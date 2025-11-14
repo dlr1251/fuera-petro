@@ -558,6 +558,27 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Compact format bar - shadcn style */
+.format-bar-compact {
+  width: 100%;
+  max-width: 1200px;
+  margin: var(--space-2) auto 0;
+  padding: 0 var(--space-4);
+}
+
+.format-bar-container-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
 /* Category Selector */
 .category-selector {
   position: relative;
@@ -578,6 +599,15 @@
   transition: all var(--transition-fast);
   backdrop-filter: blur(5px);
   min-width: 160px;
+}
+
+/* Compact category trigger */
+.format-bar-container-compact .category-trigger {
+  padding: var(--space-1.5) var(--space-3);
+  font-size: var(--text-xs);
+  min-width: 140px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .category-trigger:hover {
@@ -684,6 +714,14 @@
   white-space: nowrap;
 }
 
+/* Compact format buttons */
+.format-bar-container-compact .format-button {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+  min-height: 32px;
+}
+
 .format-button:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.15);
@@ -720,7 +758,22 @@
     padding: var(--space-3);
   }
 
+  .format-bar-compact {
+    margin: var(--space-2) auto 0;
+    padding: 0 var(--space-2);
+  }
+
+  .format-bar-container-compact {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2);
+  }
+
   .category-trigger {
+    min-width: 100%;
+  }
+
+  .format-bar-container-compact .category-trigger {
     min-width: 100%;
   }
 
@@ -741,6 +794,10 @@
     padding: var(--space-2);
   }
 
+  .format-bar-container-compact {
+    padding: var(--space-1.5);
+  }
+
   .format-options {
     gap: var(--space-1);
   }
@@ -748,6 +805,12 @@
   .format-button {
     padding: var(--space-2);
     font-size: var(--text-xs);
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-1);
+    font-size: 11px;
+    min-height: 28px;
   }
 }
 
