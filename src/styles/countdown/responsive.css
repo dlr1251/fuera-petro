@@ -1,0 +1,549 @@
+/* ============================================
+   COUNTDOWN RESPONSIVE DESIGN
+   ============================================ */
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-container::before,
+  .countdown-container::after {
+    animation: none;
+  }
+
+  .time-format-segment::before {
+    animation: none;
+  }
+
+  .countdown-title,
+  .countdown-timer,
+  .format-buttons,
+  .copy-button {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .time-segment:hover,
+  .format-button:hover,
+  .copy-button:hover {
+    transform: none;
+  }
+}
+
+/* ============================================
+   MOBILE FIRST - BASE STYLES ABOVE
+   ============================================ */
+
+/* Small devices (640px and up) */
+@media (min-width: 640px) {
+  .countdown-container {
+    padding: var(--space-6);
+  }
+
+  .countdown-title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-6);
+  }
+
+  .countdown-timer {
+    gap: var(--space-5);
+  }
+
+  .time-segment {
+    min-width: 120px;
+    padding: var(--space-7) var(--space-6);
+  }
+
+  .time-value {
+    font-size: var(--text-3xl);
+  }
+
+  .time-label {
+    font-size: var(--text-base);
+  }
+
+  .time-format-segment {
+    min-width: 320px;
+    padding: var(--space-10) var(--space-12);
+  }
+
+  .time-text {
+    font-size: var(--text-2xl);
+  }
+
+  .format-buttons {
+    gap: var(--space-4);
+  }
+
+  .format-button {
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-base);
+    min-width: 140px;
+  }
+
+  .format-label {
+    display: inline;
+  }
+}
+
+/* Medium devices (768px and up) */
+@media (min-width: 768px) {
+  .countdown-title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-6);
+  }
+
+  .countdown-timer {
+    gap: var(--space-6);
+  }
+
+  .time-segment {
+    min-width: 140px;
+    padding: var(--space-8) var(--space-7);
+  }
+
+  .time-value {
+    font-size: var(--text-3xl);
+  }
+
+  .time-label {
+    font-size: var(--text-lg);
+    margin-top: var(--space-3);
+  }
+
+  .time-format-segment {
+    min-width: 400px;
+    padding: var(--space-12) var(--space-16);
+  }
+
+  .time-text {
+    font-size: var(--text-3xl);
+  }
+
+  .format-button {
+    padding: var(--space-4) var(--space-10);
+    min-width: 160px;
+  }
+}
+
+/* Large devices (1024px and up) */
+@media (min-width: 1024px) {
+  .countdown-title {
+    font-size: var(--text-4xl);
+  }
+
+  .countdown-timer {
+    gap: var(--space-8);
+  }
+
+  .time-segment {
+    min-width: 160px;
+    padding: var(--space-10) var(--space-8);
+  }
+
+  .time-value {
+    font-size: var(--text-4xl);
+  }
+
+  .time-label {
+    font-size: var(--text-xl);
+  }
+
+  .time-format-segment {
+    min-width: 500px;
+    padding: var(--space-16) var(--space-20);
+  }
+
+  .time-text {
+    font-size: var(--text-4xl);
+  }
+
+  .format-categories-header {
+    flex-direction: row;
+    gap: var(--space-4);
+  }
+
+  .nav-container {
+    gap: var(--space-2);
+  }
+
+  .nav-tab {
+    min-width: 110px;
+  }
+
+  .format-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .format-bar-container-compact {
+    padding: var(--space-2.5) var(--space-4);
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 150px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    min-height: 36px;
+  }
+}
+
+/* Extra large devices (1280px and up) */
+@media (min-width: 1280px) {
+  .countdown-container {
+    padding: var(--space-8);
+  }
+
+  .time-segment {
+    min-width: 180px;
+  }
+
+  .format-selector-modern {
+    padding: var(--space-8);
+  }
+
+  .nav-tab {
+    min-width: 120px;
+    min-height: 65px;
+  }
+
+  .format-bar-container-compact {
+    padding: var(--space-3) var(--space-5);
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 160px;
+    padding: var(--space-2.5) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-2.5) var(--space-3.5);
+    font-size: var(--text-sm);
+    min-height: 40px;
+  }
+}
+
+/* ============================================
+   MOBILE SPECIFIC RESPONSIVE DESIGN
+   ============================================ */
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .format-bar {
+    margin: var(--space-3) auto 0;
+    padding: 0 var(--space-2);
+  }
+
+  .format-bar-container {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .format-bar-compact {
+    margin: var(--space-2) auto 0;
+    padding: 0 var(--space-2);
+  }
+
+  .format-bar-container-compact {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2);
+  }
+
+  .category-trigger {
+    min-width: 100%;
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 100%;
+  }
+
+  .format-options {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    position: static;
+    margin-top: var(--space-2);
+    animation: none;
+  }
+
+  /* Format categories responsive */
+  .format-categories {
+    gap: var(--space-1);
+  }
+
+  .category-tab {
+    font-size: var(--text-xs);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .timeline-stats {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .circular-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .percentage-circle-wrapper {
+    width: 240px;
+    height: 240px;
+  }
+
+  .percentage-value {
+    font-size: var(--text-4xl);
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    max-height: 400px;
+  }
+
+  .clock-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .digital-display {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .segment-value {
+    font-size: var(--text-3xl);
+  }
+
+  .compact-value {
+    font-size: var(--text-4xl);
+  }
+
+  .expanded-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .particles-value {
+    font-size: var(--text-5xl);
+  }
+
+  .countdown-particles {
+    height: 400px;
+  }
+
+  /* Modern Navigation Responsive */
+  .format-categories-header {
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+
+  .category-header-item {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .category-header-icon {
+    font-size: var(--text-base);
+  }
+
+  .nav-container {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding: var(--space-1);
+  }
+
+  .nav-tab {
+    min-width: 80px;
+    min-height: 50px;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .nav-icon {
+    font-size: var(--text-lg);
+  }
+
+  .nav-label {
+    font-size: 10px;
+  }
+
+  .format-options-panel {
+    padding: var(--space-4);
+  }
+
+  .panel-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .panel-title {
+    font-size: var(--text-base);
+  }
+
+  .format-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .format-option {
+    min-height: 100px;
+    padding: var(--space-4);
+  }
+
+  .option-icon {
+    font-size: var(--text-xl);
+  }
+
+  .option-label {
+    font-size: var(--text-sm);
+  }
+
+  .option-description {
+    font-size: var(--text-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .format-bar-container {
+    padding: var(--space-2);
+  }
+
+  .format-bar-container-compact {
+    padding: var(--space-1.5);
+    gap: var(--space-1.5);
+  }
+
+  .format-bar-container-compact::after {
+    display: none; /* Hide separator on mobile */
+  }
+
+  .format-options {
+    gap: var(--space-1);
+  }
+
+  .format-button {
+    padding: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-1) var(--space-1.5);
+    font-size: 10px;
+    min-height: 30px;
+    border-radius: var(--radius-sm);
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 120px;
+    padding: var(--space-1) var(--space-2);
+    font-size: 10px;
+  }
+}
+
+/* ============================================
+   TABLET RESPONSIVE DESIGN
+   ============================================ */
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .format-categories-header {
+    gap: var(--space-3);
+  }
+
+  .nav-container {
+    gap: var(--space-2);
+  }
+
+  .format-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .format-bar-container-compact {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 130px;
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-1.5) var(--space-2);
+    font-size: 11px;
+  }
+}
+
+/* ============================================
+   DESKTOP RESPONSIVE DESIGN
+   ============================================ */
+
+@media (min-width: 1024px) {
+  .format-categories-header {
+    flex-direction: row;
+    gap: var(--space-4);
+  }
+
+  .nav-container {
+    gap: var(--space-2);
+  }
+
+  .nav-tab {
+    min-width: 110px;
+  }
+
+  .format-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .format-bar-container-compact {
+    padding: var(--space-2.5) var(--space-4);
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 150px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    min-height: 36px;
+  }
+}
+
+/* ============================================
+   ULTRA-WIDE RESPONSIVE DESIGN
+   ============================================ */
+
+@media (min-width: 1280px) {
+  .format-selector-modern {
+    padding: var(--space-8);
+  }
+
+  .nav-tab {
+    min-width: 120px;
+    min-height: 65px;
+  }
+
+  .format-bar-container-compact {
+    padding: var(--space-3) var(--space-5);
+  }
+
+  .format-bar-container-compact .category-trigger {
+    min-width: 160px;
+    padding: var(--space-2.5) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .format-bar-container-compact .format-button {
+    padding: var(--space-2.5) var(--space-3.5);
+    font-size: var(--text-sm);
+    min-height: 40px;
+  }
+}

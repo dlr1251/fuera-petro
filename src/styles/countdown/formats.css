@@ -1,0 +1,839 @@
+/* ============================================
+   COUNTDOWN FORMATS & SPECIAL VIEWS
+   ============================================ */
+
+/* ============================================
+   TIMELINE VIEW
+   ============================================ */
+
+.countdown-timeline {
+  width: 100%;
+  max-width: 900px;
+  padding: var(--space-6);
+}
+
+.timeline-container {
+  position: relative;
+  padding: var(--space-8) 0;
+}
+
+.timeline-line {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-cyan) 0%, var(--accent-aqua) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+}
+
+.timeline-milestones {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin-top: var(--space-4);
+}
+
+.timeline-milestone {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.milestone-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  border: 2px solid var(--text-primary);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.6);
+}
+
+.timeline-milestone.passed .milestone-marker {
+  background: var(--accent-emerald);
+}
+
+.milestone-label {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.timeline-current {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  border: 3px solid var(--text-primary);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.current-label {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--accent-orange);
+  font-weight: var(--font-weight-bold);
+}
+
+.timeline-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.timeline-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+}
+
+.stat-value {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* ============================================
+   PROGRESS BARS VIEW
+   ============================================ */
+
+.countdown-progress-bars {
+  width: 100%;
+  max-width: 700px;
+  padding: var(--space-4);
+}
+
+.progress-bar-item {
+  margin-bottom: var(--space-6);
+}
+
+.progress-bar-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.progress-bar-label {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.progress-bar-value {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
+}
+
+.progress-bar-percentage {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: right;
+}
+
+/* ============================================
+   CIRCULAR PROGRESS VIEW
+   ============================================ */
+
+.countdown-circular {
+  width: 100%;
+  padding: var(--space-6);
+}
+
+.circular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-6);
+  justify-items: center;
+}
+
+.circular-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-svg {
+  transform: rotate(-90deg);
+}
+
+.circular-bg {
+  transition: stroke 0.3s ease;
+}
+
+.circular-progress {
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+.circular-content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-value {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.circular-label {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.circular-percentage {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-1);
+}
+
+/* ============================================
+   PERCENTAGE VIEW
+   ============================================ */
+
+.countdown-percentage {
+  width: 100%;
+  max-width: 600px;
+  padding: var(--space-6);
+}
+
+.percentage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.percentage-circle-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+}
+
+.percentage-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.percentage-bg {
+  transition: stroke 0.3s ease;
+}
+
+.percentage-progress {
+  transition: stroke-dashoffset 0.8s ease-in-out;
+}
+
+.percentage-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.percentage-value {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.percentage-label {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+}
+
+.percentage-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.percentage-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+}
+
+.stat-icon {
+  font-size: var(--text-2xl);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   CALENDAR VIEW
+   ============================================ */
+
+.countdown-calendar {
+  width: 100%;
+  max-width: 1000px;
+  padding: var(--space-4);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+}
+
+.calendar-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.calendar-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.summary-value {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-cyan);
+}
+
+.summary-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--space-2);
+  max-height: 500px;
+  overflow-y: auto;
+  padding: var(--space-2);
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.calendar-day:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.calendar-day.today {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+}
+
+.calendar-day.target {
+  background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-light) 100%);
+  border-color: var(--accent-emerald);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.calendar-day.past {
+  opacity: 0.5;
+}
+
+.day-number {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.day-month {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.day-indicator {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 8px;
+  padding: 2px 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.day-indicator.target {
+  background: rgba(16, 185, 129, 0.8);
+}
+
+/* ============================================
+   ANALOG CLOCK VIEW
+   ============================================ */
+
+.countdown-analog-clock {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-6);
+}
+
+.clock-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.clock-face {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));
+}
+
+.clock-hand {
+  transition: transform 0.1s linear;
+  filter: drop-shadow(0 0 3px rgba(14, 165, 233, 0.5));
+}
+
+.clock-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  margin-top: 120px;
+}
+
+.clock-time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: 'Courier New', monospace;
+}
+
+.time-value {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.time-separator {
+  font-size: var(--text-xl);
+  color: var(--accent-cyan);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* ============================================
+   DIGITAL CLOCK VIEW
+   ============================================ */
+
+.countdown-digital-clock {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-6);
+}
+
+.digital-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-10);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass);
+}
+
+.digital-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.segment-value {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-weight-bold);
+  font-family: 'Courier New', monospace;
+  color: var(--text-primary);
+  text-shadow:
+    0 0 10px var(--accent-cyan),
+    0 0 20px var(--accent-cyan),
+    0 0 30px var(--accent-cyan);
+  letter-spacing: 2px;
+}
+
+.segment-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.digital-separator {
+  font-size: var(--text-5xl);
+  color: var(--accent-cyan);
+  font-weight: var(--font-weight-bold);
+  animation: pulse 1s ease-in-out infinite;
+  text-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* ============================================
+   COMPACT VIEW
+   ============================================ */
+
+.countdown-compact {
+  width: 100%;
+  max-width: 500px;
+  padding: var(--space-4);
+}
+
+.compact-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass);
+}
+
+.compact-main {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.compact-value {
+  font-size: var(--text-6xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.compact-unit {
+  font-size: var(--text-2xl);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.compact-secondary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+}
+
+.compact-separator {
+  color: var(--accent-cyan);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* ============================================
+   EXPANDED VIEW
+   ============================================ */
+
+.countdown-expanded {
+  width: 100%;
+  max-width: 1200px;
+  padding: var(--space-4);
+}
+
+.expanded-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.expanded-card {
+  padding: var(--space-6);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass);
+}
+
+.card-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.progress-circle-small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.progress-value {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.progress-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.stat-name {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.stat-number {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+
+.breakdown-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.breakdown-value {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   PARTICLES VIEW
+   ============================================ */
+
+.countdown-particles {
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  position: relative;
+  padding: var(--space-4);
+}
+
+.particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-xl);
+}
+
+.particles-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-6);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+}
+
+.particles-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.particles-value {
+  font-size: var(--text-7xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-shadow:
+    0 0 20px var(--accent-cyan),
+    0 0 40px var(--accent-cyan);
+  line-height: 1;
+}
+
+.particles-label {
+  font-size: var(--text-2xl);
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.particles-secondary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+}
+
+/* ============================================
+   TEXT VIEW
+   ============================================ */
+
+.countdown-text {
+  width: 100%;
+  max-width: 800px;
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.text-content {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-normal);
+}
