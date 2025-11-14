@@ -68,7 +68,12 @@ const Countdown = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isDropdownOpen && !event.target.closest('.category-selector')) {
+      // Don't close if clicking on the trigger button or if dropdown is not open
+      if (!isDropdownOpen || event.target.closest('.category-trigger')) {
+        return;
+      }
+
+      if (!event.target.closest('.category-selector')) {
         setIsDropdownOpen(false);
       }
     };
