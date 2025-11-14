@@ -1,13 +1,17 @@
 ---
-import Countdown from '../components/Countdown.jsx';
+import App from '../components/App.jsx';
+import '../styles/global.css';
+import '../styles/timeline.css';
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
-		<title>Cuenta regresiva para el fin del gobierno de Petro</title>		
-    	<meta name="description" content="Descubre cuántos días faltan para que termine el gobierno de Petro. Sigue la cuenta regresiva y mantente informado.">
-    	<meta name="keywords" content="cuánto falta para que se vaya petro, días para final de gobierno petro, cuánto le queda a petro, fuera petro, petro guerrillero, Colombia">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>⏱️ Cuenta Regresiva Petro - Últimas Noticias</title>
+    	<meta name="description" content="Cuánto le queda al gobierno de Gustavo Petro. Cuenta regresiva en tiempo real y últimas noticias sobre el gobierno colombiano.">
+    	<meta name="keywords" content="cuánto falta para que se vaya petro, días para final de gobierno petro, cuánto le queda a petro, fuera petro, petro guerrillero, Colombia, noticias petro, corrupción petro">
     	<meta name="author" content="Ciudadanos">
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-83LSWYD229"></script>
 		<script>
@@ -19,6 +23,6 @@ import Countdown from '../components/Countdown.jsx';
 		</script>
 	</head>
   <body>
-    <Countdown client:load />
+    <App client:load />
   </body>
 </html>

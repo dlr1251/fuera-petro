@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '../styles/countdown.css';
 import CountdownDays from './CountdownDays';
 import CountdownSeconds from './CountdownSeconds';
 import CountdownHours from './CountdownHours';
 import CountdownText from './CountdownText';
+import CountdownTimeline from './CountdownTimeline';
+import CountdownProgressBars from './CountdownProgressBars';
+import CountdownCircular from './CountdownCircular';
+import CountdownPercentage from './CountdownPercentage';
+import CountdownCalendar from './CountdownCalendar';
+import CountdownAnalogClock from './CountdownAnalogClock';
+import CountdownDigitalClock from './CountdownDigitalClock';
+import CountdownCompact from './CountdownCompact';
+import CountdownExpanded from './CountdownExpanded';
+import CountdownParticles from './CountdownParticles';
+
+const TARGET_DATE = '2026-08-07';
 
 const Countdown = () => {
   const [selectedFormat, setSelectedFormat] = useState('default');
   const [copyMessage, setCopyMessage] = useState('');
+  const formatRef = useRef(null);
+  const previousTimeRef = useRef(null);
 
-  const calculateTimeLeft = () => {
-    const difference = +new Date('2026-08-07') - +new Date();
+  const calculateTimeLeft = useCallback(() => {
+    const difference = +new Date(TARGET_DATE) - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {
@@ -26,42 +40,245 @@ const Countdown = () => {
     }
 
     return timeLeft;
-  };
+  }, []);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
+    const timer = setInterval(() => {
+      const newTimeLeft = calculateTimeLeft();
+
+      // Only update if values actually changed to prevent unnecessary re-renders
+      const hasChanged = !previousTimeRef.current ||
+        Object.keys(newTimeLeft).some(key =>
+          previousTimeRef.current[key] !== newTimeLeft[key]
+        );
+
+      if (hasChanged) {
+        previousTimeRef.current = newTimeLeft;
+        setTimeLeft(newTimeLeft);
+      }
     }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [timeLeft]);
+    return () => clearInterval(timer);
+  }, []);
 
-  const handleCopy = () => {
-    const textToCopy = document.querySelector('.time-format-segment').innerText;
-    navigator.clipboard.writeText(textToCopy);
-    setCopyMessage('¡Copiado!');
-    setTimeout(() => setCopyMessage(''), 2000);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.category-selector')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isDropdownOpen]);
+
+  const handleFormatChange = useCallback((format) => {
+    if (format !== selectedFormat) {
+      setSelectedFormat(format);
+    }
+  }, [selectedFormat]);
+
+  const handleCopy = useCallback(async () => {
+    try {
+      const formatElement = formatRef.current?.querySelector('.time-format-segment');
+      const defaultElement = formatRef.current?.querySelector('.countdown-timer');
+      
+      let textToCopy = '';
+      
+      if (formatElement) {
+        textToCopy = formatElement.innerText;
+      } else if (defaultElement) {
+        // Format the default countdown text
+        const segments = defaultElement.querySelectorAll('.time-segment');
+        const parts = Array.from(segments).map(seg => {
+          const value = seg.querySelector('.time-value')?.textContent || '';
+          const label = seg.querySelector('.time-label')?.textContent || '';
+          return `${value} ${label}`;
+        });
+        textToCopy = parts.join(', ');
+      }
+
+      if (textToCopy) {
+        await navigator.clipboard.writeText(textToCopy);
+        setCopyMessage('¡Copiado al portapapeles!');
+        setTimeout(() => setCopyMessage(''), 3000);
+      }
+    } catch (err) {
+      setCopyMessage('Error al copiar');
+      setTimeout(() => setCopyMessage(''), 2000);
+    }
+  }, []);
+
+  const handleKeyDown = useCallback((event, format) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleFormatChange(format);
+    }
+  }, [handleFormatChange]);
+
+  const [selectedCategory, setSelectedCategory] = useState('basic');
+
+  const formatCategories = {
+    basic: {
+      label: '⏱️ Básico',
+      formats: [
+        { id: 'default', label: 'Completo', icon: '📅' },
+        { id: 'days', label: 'Días', icon: '📆' },
+        { id: 'hours', label: 'Horas', icon: '🕐' },
+        { id: 'compact', label: 'Compacto', icon: '📏' },
+      ]
+    },
+    graphics: {
+      label: '📊 Gráficos',
+      formats: [
+        { id: 'timeline', label: 'Timeline', icon: '📈' },
+        { id: 'progress-bars', label: 'Barras', icon: '📊' },
+        { id: 'circular', label: 'Círculos', icon: '⭕' },
+        { id: 'percentage', label: 'Porcentaje', icon: '📈' },
+      ]
+    },
+    advanced: {
+      label: '⚡ Avanzado',
+      formats: [
+        { id: 'calendar', label: 'Calendario', icon: '📅' },
+        { id: 'analog-clock', label: 'Reloj Analógico', icon: '🕰️' },
+        { id: 'digital-clock', label: 'Reloj Digital', icon: '🕒' },
+        { id: 'expanded', label: 'Expandido', icon: '🔍' },
+      ]
+    },
+    fun: {
+      label: '🎨 Creativo',
+      formats: [
+        { id: 'particles', label: 'Partículas', icon: '✨' },
+        { id: 'text', label: 'Texto Creativo', icon: '📝' },
+        { id: 'seconds', label: 'Segundos', icon: '⚡' },
+      ]
+    }
   };
 
   const renderFormat = () => {
+    const baseProps = { 
+      'aria-live': 'polite',
+      'aria-atomic': 'true'
+    };
+
     switch (selectedFormat) {
       case 'days':
-        return <CountdownDays days={Math.floor((+new Date('2026-08-07') - +new Date()) / (1000 * 60 * 60 * 24))} />;
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownDays 
+              days={Math.floor((+new Date(TARGET_DATE) - +new Date()) / (1000 * 60 * 60 * 24))} 
+            />
+          </div>
+        );
       case 'seconds':
-        return <CountdownSeconds seconds={Math.floor((+new Date('2026-08-07') - +new Date()) / 1000)} />;
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownSeconds 
+              seconds={Math.floor((+new Date(TARGET_DATE) - +new Date()) / 1000)} 
+            />
+          </div>
+        );
       case 'hours':
-        return <CountdownHours hours={Math.floor((+new Date('2026-08-07') - +new Date()) / (1000 * 60 * 60))} />;
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownHours 
+              hours={Math.floor((+new Date(TARGET_DATE) - +new Date()) / (1000 * 60 * 60))} 
+            />
+          </div>
+        );
       case 'text':
-        return <CountdownText timeLeft={timeLeft} />;
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownText timeLeft={timeLeft} />
+          </div>
+        );
+      case 'timeline':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownTimeline timeLeft={timeLeft} />
+          </div>
+        );
+      case 'progress-bars':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownProgressBars timeLeft={timeLeft} />
+          </div>
+        );
+      case 'circular':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownCircular timeLeft={timeLeft} />
+          </div>
+        );
+      case 'percentage':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownPercentage />
+          </div>
+        );
+      case 'calendar':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownCalendar />
+          </div>
+        );
+      case 'analog-clock':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownAnalogClock timeLeft={timeLeft} />
+          </div>
+        );
+      case 'digital-clock':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownDigitalClock />
+          </div>
+        );
+      case 'compact':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownCompact timeLeft={timeLeft} />
+          </div>
+        );
+      case 'expanded':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownExpanded timeLeft={timeLeft} />
+          </div>
+        );
+      case 'particles':
+        return (
+          <div ref={formatRef} {...baseProps}>
+            <CountdownParticles timeLeft={timeLeft} />
+          </div>
+        );
       default:
         return (
-          <div className="countdown-timer">
+          <div 
+            ref={formatRef}
+            className="countdown-timer"
+            role="timer"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label="Cuenta regresiva completa"
+          >
             {Object.keys(timeLeft).map(interval => (
-              <span key={interval} className="time-segment">
-                {timeLeft[interval]} <span className="time-label">{interval}</span>
-              </span>
+              <div 
+                key={interval} 
+                className="time-segment"
+                aria-label={`${timeLeft[interval]} ${interval}`}
+              >
+                <span className="time-value" aria-hidden="true">
+                  {timeLeft[interval]}
+                </span>
+                <span className="time-label">{interval}</span>
+              </div>
             ))}
           </div>
         );
@@ -69,21 +286,86 @@ const Countdown = () => {
   };
 
   return (
-    <div className="countdown-container">
-      <h1 className="countdown-title">Al gobierno Petro le faltan...</h1>
-      {renderFormat()}
-      <div className="format-buttons">
-        <button onClick={() => setSelectedFormat('default')} className="format-button">Formato Completo</button>
-        <button onClick={() => setSelectedFormat('days')} className="format-button yellow-background">Sólo Días</button>
-        <button onClick={() => setSelectedFormat('seconds')} className="format-button aqua-background">Sólo Segundos</button>
-        <button onClick={() => setSelectedFormat('hours')} className="format-button red-background">Sólo Horas</button>
-        <button onClick={() => setSelectedFormat('text')} className="format-button text-background">Formato Texto</button>
+    <div className="countdown-container" role="main">
+      <h1 className="countdown-title">
+        Al gobierno Petro le faltan...
+      </h1>
+
+      <div className="countdown-display-wrapper">
+        <div className="format-transition-container" key={selectedFormat}>
+          {renderFormat()}
+        </div>
       </div>
-      <button 
-        className="copy-button" 
+
+      {/* Simple Format Bar */}
+      <div className="format-bar">
+        <div className="format-bar-container">
+          {/* Main Category Selector */}
+          <div className="category-selector">
+            <button
+              className="category-trigger"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              aria-expanded={isDropdownOpen}
+              aria-haspopup="true"
+            >
+              <span className="category-trigger-text">{formatCategories[selectedCategory].label}</span>
+              <span className="dropdown-arrow" aria-hidden="true">▼</span>
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                {Object.entries(formatCategories).map(([categoryKey, category]) => (
+                  <button
+                    key={categoryKey}
+                    className={`dropdown-item ${selectedCategory === categoryKey ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedCategory(categoryKey);
+                      setIsDropdownOpen(false);
+                    }}
+                  >
+                    <span className="dropdown-icon">{category.icon}</span>
+                    <span className="dropdown-text">{category.label.replace(/^[^\s]+\s/, '')}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Format Options */}
+          <div className="format-options">
+            {formatCategories[selectedCategory].formats.map((format) => (
+              <button
+                key={format.id}
+                className={`format-button ${selectedFormat === format.id ? 'active' : ''}`}
+                onClick={() => handleFormatChange(format.id)}
+                onKeyDown={(e) => handleKeyDown(e, format.id)}
+                aria-pressed={selectedFormat === format.id}
+                title={format.label}
+              >
+                <span className="format-icon">{format.icon}</span>
+                <span className="format-label">{format.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <button
+        className="copy-button"
         onClick={handleCopy}
-        onMouseOver={() => setCopyMessage('Copia esta info y difunde la esperanza')}
-        onMouseOut={() => setCopyMessage('')}
+        onMouseEnter={() => {
+          if (!copyMessage) {
+            setCopyMessage('Copia esta info y difunde la esperanza');
+          }
+        }}
+        onMouseLeave={() => {
+          if (copyMessage && !copyMessage.includes('¡Copiado')) {
+            setCopyMessage('');
+          }
+        }}
+        aria-label="Copiar información de la cuenta regresiva al portapapeles"
+        type="button"
       >
         {copyMessage || 'Copiar al Portapapeles'}
       </button>

@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "extract-news": "node extract-historical-news.js"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",
