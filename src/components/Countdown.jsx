@@ -131,39 +131,43 @@ const Countdown = () => {
   const formatCategories = {
     basic: {
       label: '⏱️ Básico',
+      description: 'Formatos simples y directos',
       formats: [
         { id: 'default', label: 'Completo', icon: '📅' },
         { id: 'days', label: 'Días', icon: '📆' },
         { id: 'hours', label: 'Horas', icon: '🕐' },
         { id: 'compact', label: 'Compacto', icon: '📏' },
-      ]
+      ],
     },
     graphics: {
       label: '📊 Gráficos',
+      description: 'Visualizaciones avanzadas',
       formats: [
         { id: 'timeline', label: 'Timeline', icon: '📈' },
         { id: 'progress-bars', label: 'Barras', icon: '📊' },
         { id: 'circular', label: 'Círculos', icon: '⭕' },
         { id: 'percentage', label: 'Porcentaje', icon: '📈' },
-      ]
+      ],
     },
     advanced: {
       label: '⚡ Avanzado',
+      description: 'Herramientas especializadas',
       formats: [
         { id: 'calendar', label: 'Calendario', icon: '📅' },
         { id: 'analog-clock', label: 'Reloj Analógico', icon: '🕰️' },
         { id: 'digital-clock', label: 'Reloj Digital', icon: '🕒' },
         { id: 'expanded', label: 'Expandido', icon: '🔍' },
-      ]
+      ],
     },
     fun: {
       label: '🎨 Creativo',
+      description: 'Formatos divertidos',
       formats: [
         { id: 'particles', label: 'Partículas', icon: '✨' },
         { id: 'text', label: 'Texto Creativo', icon: '📝' },
         { id: 'seconds', label: 'Segundos', icon: '⚡' },
-      ]
-    }
+      ],
+    },
   };
 
   const renderFormat = () => {
@@ -296,59 +300,83 @@ const Countdown = () => {
         Al gobierno Petro le faltan...
       </h1>
 
-      {/* Compact Format Bar - Moved right after title */}
-      <div className="format-bar-compact">
-        <div className="format-bar-container-compact">
-          {/* Main Category Selector */}
-          <div className="category-selector">
-            <button
-              className="category-trigger"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              aria-expanded={isDropdownOpen}
-              aria-haspopup="true"
-            >
-              <span className="category-trigger-text">{formatCategories[selectedCategory].label}</span>
-              <span className="dropdown-arrow" aria-hidden="true">▼</span>
-            </button>
+      {/* Shadcn-inspired Format Toolbar */}
+      <section className="format-toolbar" aria-label="Selector de formatos de cuenta regresiva">
+        <div className="toolbar-shell">
+          <div className="toolbar-header">
+            <div className="category-selector" data-state={isDropdownOpen ? 'open' : 'closed'}>
+              <button
+                className="category-trigger"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="menu"
+                type="button"
+              >
+                <span className="category-trigger-icon" aria-hidden="true">
+                  {formatCategories[selectedCategory].label.split(' ')[0]}
+                </span>
+                <span className="category-trigger-text">
+                  {formatCategories[selectedCategory].label.split(' ')[1] || formatCategories[selectedCategory].label}
+                </span>
+                <span className="dropdown-arrow" aria-hidden="true">▼</span>
+              </button>
 
-            {/* Dropdown Menu */}
-            {isDropdownOpen && (
-              <div className="dropdown-menu">
-                {Object.entries(formatCategories).map(([categoryKey, category]) => (
-                  <button
-                    key={categoryKey}
-                    className={`dropdown-item ${selectedCategory === categoryKey ? 'active' : ''}`}
-                    onClick={() => {
-                      setSelectedCategory(categoryKey);
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <span className="dropdown-icon">{category.icon}</span>
-                    <span className="dropdown-text">{category.label.replace(/^[^\s]+\s/, '')}</span>
-                  </button>
-                ))}
-              </div>
-            )}
+              {isDropdownOpen && (
+                <div className="dropdown-menu" role="menu">
+                  {Object.entries(formatCategories).map(([categoryKey, category]) => {
+                    const [icon, label] = category.label.split(' ');
+                    return (
+                      <button
+                        key={categoryKey}
+                        className={`dropdown-item ${selectedCategory === categoryKey ? 'active' : ''}`}
+                        role="menuitemradio"
+                        aria-checked={selectedCategory === categoryKey}
+                        onClick={() => {
+                          setSelectedCategory(categoryKey);
+                          setIsDropdownOpen(false);
+                        }}
+                        type="button"
+                      >
+                        <span className="dropdown-icon" aria-hidden="true">{icon}</span>
+                        <div className="dropdown-copy">
+                          <span className="dropdown-text">{label || category.label}</span>
+                          <span className="dropdown-description">{category.description}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            <div className="toolbar-meta">
+              <span className="toolbar-chip">Formatos</span>
+              <span className="toolbar-hint">{formatCategories[selectedCategory].description}</span>
+            </div>
           </div>
 
-          {/* Format Options */}
-          <div className="format-options">
+          <div
+            className="toolbar-buttons"
+            role="radiogroup"
+            aria-label={`Formatos disponibles en ${formatCategories[selectedCategory].label}`}
+          >
             {formatCategories[selectedCategory].formats.map((format) => (
               <button
                 key={format.id}
-                className={`format-button ${selectedFormat === format.id ? 'active' : ''}`}
+                className={`toolbar-button ${selectedFormat === format.id ? 'active' : ''}`}
                 onClick={() => handleFormatChange(format.id)}
                 onKeyDown={(e) => handleKeyDown(e, format.id)}
-                aria-pressed={selectedFormat === format.id}
-                title={format.label}
+                role="radio"
+                aria-checked={selectedFormat === format.id}
+                type="button"
               >
-                <span className="format-icon">{format.icon}</span>
-                <span className="format-label">{format.label}</span>
+                <span className="toolbar-button-icon" aria-hidden="true">{format.icon}</span>
+                <span className="toolbar-button-label">{format.label}</span>
               </button>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Countdown Display */}
       <div className="countdown-display-wrapper">
